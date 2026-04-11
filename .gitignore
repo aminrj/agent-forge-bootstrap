@@ -8,7 +8,7 @@ __pycache__/
 dist/
 *.egg-info/
 .installed.cfg
-*.egg/
+*.egg
 
 # Distribution / packaging
 .Python
@@ -61,6 +61,7 @@ Thumbs.db
 .env
 .env.local
 .env.*.local
+.env.agent-forge
 
 # Local configuration
 config.local.json
@@ -71,7 +72,6 @@ settings.local.json
 *.temp
 
 # Secrets
-.env.agent-forge
 *.key
 *.cert
 *.pem
