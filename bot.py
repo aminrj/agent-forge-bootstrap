@@ -50,6 +50,7 @@ async def run_opencode(prompt: str) -> str:
 
 async def agent_loop(task: str):
     await post(f"Task: {task}\nStarting...")
+    await post(f"Working in directory: {REPO_PATH}")
 
     # Architect pass
     await post("Architect planning...")
@@ -74,6 +75,18 @@ async def agent_loop(task: str):
             f"Run any tests that exist after implementing. Report what files you created/modified."
         )
         await post(f"Executor output:\n{result[:1200]}")
+
+        # Let's add a debug step to show what files exist
+        try:
+            debug_result = subprocess.run(
+                ["find", ".", "-not", "-path", "./.git/*", "-type", "f"],
+                cwd=REPO_PATH,
+                capture_output=True,
+                text=True,
+            )
+            await post(f"Files in repo after execution:\n{debug_result.stdout[:500]}")
+        except Exception as e:
+            await post(f"Debug error: {str(e)}")
 
         # Reviewer pass
         await post("Reviewer checking...")
